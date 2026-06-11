@@ -373,7 +373,8 @@ function BookingApp({ onOrderPlaced, services }) {
 
 // ─── ADMIN SERVICES MANAGER ───────────────────────────────────────────────────
 function ServicesManager({ services, onSave }) {
-  const [list, setList] = useState(services);
+  const [list, setList] = useState(services.length > 0 ? services : DEFAULT_SERVICES);
+  useEffect(() => { if (services.length > 0) setList(services); }, [services]);
   const [editing, setEditing] = useState(null);
   const [newService, setNewService] = useState({ label: "", emoji: "🧺", price: "", desc: "", active: true });
   const [showNew, setShowNew] = useState(false);
@@ -536,10 +537,9 @@ function CustomersView({ allOrders }) {
 }
 
 // ─── ADMIN PANEL ──────────────────────────────────────────────────────────────
-function AdminPanel({ services, onServicesUpdate }) {
+function AdminPanel({ services, onServicesUpdate, activeTab, setActiveTab }) {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState("orders");
   const [search, setSearch] = useState("");
   const [filterStatus, setFilter] = useState("all");
   const [selected, setSelected] = useState(null);
