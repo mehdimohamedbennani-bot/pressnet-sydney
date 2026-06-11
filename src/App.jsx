@@ -825,16 +825,7 @@ export default function App() {
               Admin
             </button>
           )}
-          {view === "admin" && adminAuth && (
-            <div style={{ display: "flex", gap: 4 }}>
-              {ADMIN_TABS.map(t => (
-                <button key={t.id} onClick={() => setAdminTab(t.id)} style={{ background: adminTab === t.id ? "rgba(255,255,255,.2)" : "transparent", border: "none", borderRadius: 8, color: adminTab === t.id ? "#fff" : "#9CA3AF", padding: "6px 8px", cursor: "pointer", fontSize: 11, fontWeight: 600, fontFamily: "inherit", display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>
-                  <span style={{ fontSize: 14 }}>{t.icon}</span>
-                  <span>{t.label}</span>
-                </button>
-              ))}
-            </div>
-          )}
+
         </div>
 
         {/* CONTENT */}
@@ -850,6 +841,19 @@ export default function App() {
         )}
         {view === "admin" && !adminAuth && <AdminLogin onLogin={() => setAdminAuth(true)} />}
         {view === "admin" && adminAuth && <AdminPanel services={services} onServicesUpdate={handleServicesUpdate} activeTab={adminTab} setActiveTab={setAdminTab} />}
+
+        {/* BOTTOM ADMIN NAV */}
+        {view === "admin" && adminAuth && (
+          <div style={{ background: C.navy, borderTop: "1px solid rgba(255,255,255,.1)", display: "flex", position: "sticky", bottom: 0, zIndex: 100 }}>
+            {ADMIN_TABS.map(t => (
+              <button key={t.id} onClick={() => setAdminTab(t.id)}
+                style={{ flex: 1, background: adminTab === t.id ? "rgba(255,255,255,.15)" : "transparent", border: "none", color: adminTab === t.id ? "#fff" : "#6B7280", padding: "10px 4px 14px", cursor: "pointer", fontFamily: "inherit", display: "flex", flexDirection: "column", alignItems: "center", gap: 3 }}>
+                <span style={{ fontSize: 20 }}>{t.icon}</span>
+                <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: ".04em" }}>{t.label}</span>
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
